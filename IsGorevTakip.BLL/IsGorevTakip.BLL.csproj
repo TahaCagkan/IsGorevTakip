@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IsGorevTakip.Core\IsGorevTakip.Core.csproj" />
+    <ProjectReference Include="..\IsGorevTakip.DAL\IsGorevTakip.DAL.csproj" />
+  </ItemGroup>
+
+</Project>
