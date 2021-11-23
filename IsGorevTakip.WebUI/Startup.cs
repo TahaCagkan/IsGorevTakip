@@ -1,5 +1,12 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using IsGorevTakip.BLL.IoC;
+using IsGorevTakip.BLL.ValidationRules.FluentValidation;
 using IsGorevTakip.DAL.EntityFramework.Context;
+using IsGorevTakip.DTO.DTos.AppUserDtos;
+using IsGorevTakip.DTO.DTos.JobWorkDtos;
+using IsGorevTakip.DTO.DTos.ReportDtos;
+using IsGorevTakip.DTO.DTos.UrgencyDtos;
 using IsGorevTakip.Entities.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,7 +42,18 @@ namespace IsGorevTakip.WebUI
                 opt.LoginPath = "/Home/Index";
             });
 
-            services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddTransient<IValidator<UrgencyAddDto>, UrgencyAddValidator>();
+            services.AddTransient<IValidator<UrgencyUpdateDto>, UrgencyUpdateValidator>();
+            services.AddTransient<IValidator<AppUserAddDto>, AppUserAddValidator>();
+            services.AddTransient<IValidator<AppUserSignInDto>, AppUserSignInValidator>();
+            services.AddTransient<IValidator<JobWorkAddDto>, JobWorkAddValidator>();
+            services.AddTransient<IValidator<JobWorkUpdateDto>, JobWorkUpdateValidator>();
+            services.AddTransient<IValidator<ReportAddDto>, ReportAddValidator>();
+            services.AddTransient<IValidator<ReportUpdateDto>, ReportUpdateValidator>();
+
+
+            services.AddControllersWithViews().AddFluentValidation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +63,8 @@ namespace IsGorevTakip.WebUI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStatusCodePagesWithReExecute("/Home/StatusCode", "?code={0}");
+
 
             app.UseRouting();
             app.UseAuthentication();

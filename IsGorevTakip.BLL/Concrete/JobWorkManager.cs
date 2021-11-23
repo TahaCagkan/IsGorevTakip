@@ -4,6 +4,7 @@ using IsGorevTakip.DAL.Concrete;
 using IsGorevTakip.Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace IsGorevTakip.BLL.Concrete
@@ -60,6 +61,21 @@ namespace IsGorevTakip.BLL.Concrete
         public List<JobWork> GetAppUserId(int appUserId)
         {
             return _jobWorkDAL.GetAppUserId(appUserId);
+        }
+
+        public JobWork GetReportId(int id)
+        {
+            return _jobWorkDAL.GetReportId(id);
+        }
+
+        public List<JobWork> GetAllTable(Expression<Func<JobWork, bool>> filter)
+        {
+            return _jobWorkDAL.GetAllTable(filter);
+        }
+
+        public List<JobWork> GetAllTableNotOk(out int totalPage, int userId, int activePage)
+        {
+            return _jobWorkDAL.GetAllTableNotOk(out totalPage, userId, activePage);
         }
     }
 }

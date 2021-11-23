@@ -1,0 +1,44 @@
+﻿@model ReportUpdateViewModel
+
+@{
+    ViewData["Title"] = "UpdateReport";
+    Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
+}
+
+<form method="post" asp-action="UpdateReport" class="w-75 mx-auto p-3">
+
+    <div class="text-center lead p-3">
+        <p>
+            <span class="text-danger">Görevin Adın : </span>@Model.JobWorks.Name
+        </p>
+        <p>
+            <span class="text-danger">Görevin Açıklaması : </span>@Model.JobWorks.Description
+        </p>
+        <p>
+            <span class="text-danger">Görevin Aciliyet Durumu : </span>@Model.JobWorks.Urgency.Definition
+        </p>
+    </div>
+
+    <input type="hidden" asp-for="@Model.JobWorkId" />
+    <div class="form-group">
+        <label asp-for="@Model.Definition"></label>
+        <span asp-validation-for="@Model.Definition" class="text-danger"></span>
+        <input asp-for="@Model.Definition" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Detail"></label>
+        <span asp-validation-for="@Model.Detail" class="text-danger"></span>
+        <textarea asp-for="@Model.Detail" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <a asp-action="Index" class="btn btn-warning btn-sm">Vazgeç</a>
+        <button type="submit" class="btn btn-info btn-sm">Kaydet</button>
+    </div>
+</form>
+
+
+@section JavaScript{
+    <script src="~/lib/jqueryValidate/jquery.validate.min.js"></script>
+    <script src="~/lib/jqueryUnob/jquery.validate.unobtrusive.min.js"></script>
+}

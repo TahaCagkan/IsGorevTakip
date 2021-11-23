@@ -2,6 +2,7 @@
 using IsGorevTakip.Entities.Concrete;
 using IsGorevTakip.WebUI.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,15 @@ namespace IsGorevTakip.WebUI.Areas.Admin.Controllers
     {
         private readonly IAppUserService _appUserService;
         private readonly IJobWorkService _jobWorkService;
-        public JobWorkOrderController(IAppUserService appUserService, IJobWorkService jobWorkService)
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IDocumentService _documentService;
+
+        public JobWorkOrderController(IAppUserService appUserService, IJobWorkService jobWorkService, UserManager<AppUser> userManager, IDocumentService documentService)
         {
+            _documentService = documentService;
             _appUserService = appUserService;
             _jobWorkService = jobWorkService;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -27,6 +33,7 @@ namespace IsGorevTakip.WebUI.Areas.Admin.Controllers
             //var model = _appUserService.GetAllNotAdmin();
             List<JobWork> jobWorks = _jobWorkService.GetAllTable();
             List<JobWorkListGetAllViewModel> models = new List<JobWorkListGetAllViewModel>();
+
             foreach (var item in jobWorks)
             {
                 JobWorkListGetAllViewModel model = new JobWorkListGetAllViewModel();
@@ -42,6 +49,23 @@ namespace IsGorevTakip.WebUI.Areas.Admin.Controllers
             }
             return View(models);
         }
+
+        public IActionResult SendWorkerDetails(int id)
+        {
+            TempData["Active"] = "jobWorkOrderActive";
+
+            var jobWork = _jobWorkService.GetReportId(id);
+            JobWorkListGetAllViewModel model = new JobWorkListGetAllViewModel();
+            model.Id = jobWork.Id;
+            model.CreateDate = jobWork.CreateDate;
+            model.Report = jobWork.Report;
+            model.Name = jobWork.Name;
+            model.Description = jobWork.Description;
+            model.AppUser = jobWork.AppUser;
+
+            return View(model);
+        }
+
         public IActionResult SendWorker(int id,string searchByUrl,int pagein=1)
         {
             TempData["Active"] = "jobWorkOrderActive";
@@ -58,16 +82,17 @@ namespace IsGorevTakip.WebUI.Areas.Admin.Controllers
             List<AppUserListViewModel> appUserListModel = new List<AppUserListViewModel>();
             foreach (var item in personels)
             {
-                AppUserListViewModel model = new AppUserListViewModel();
-                model.Id = item.Id;
-                model.Name = item.Name;
-                model.Lastname = item.LastName;
-                model.Email = item.Email;
-                model.Picture = item.Picture;
-                appUserListModel.Add(model);
+                //Kullanici bilgileri icin
+                AppUserListViewModel generalAppUserListModel = new AppUserListViewModel();
+                generalAppUserListModel.Id = item.Id;
+                generalAppUserListModel.Name = item.Name;
+                generalAppUserListModel.Lastname = item.LastName;
+                generalAppUserListModel.Email = item.Email;
+                generalAppUserListModel.Picture = item.Picture;
+                appUserListModel.Add(generalAppUserListModel);
             }
             ViewBag.Personals = appUserListModel;
-
+            //is gorev icin
             JobWorkListViewModel jobModel = new JobWorkListViewModel();
             jobModel.Id = jobWork.Id;
             jobModel.Name = jobWork.Name;
@@ -75,6 +100,55 @@ namespace IsGorevTakip.WebUI.Areas.Admin.Controllers
             jobModel.Urgency = jobWork.Urgency;
             jobModel.CreateDate = jobWork.CreateDate;
             return View(jobModel);
+        }
+        [HttpPost]
+        public IActionResult SendWorker(EmployeeJobWorkViewModel model)
+        {
+            var updateJobWork = _jobWorkService.GetId(model.JobWorkId);
+            updateJobWork.AppUserId = model.EmployeeJobWorkId;
+            _jobWorkService.Update(updateJobWork);
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult EmployeeJobWork(EmployeeJobWorkViewModel model)
+        {
+            TempData["Active"] = "jobWorkOrderActive";
+
+            var user = _userManager.Users.FirstOrDefault(x => x.Id == model.EmployeeJobWorkId);
+
+            var jobWorkUser = _jobWorkService.GetUrgencyId(model.JobWorkId);
+            //Kullanici bilgileri icin
+            AppUserListViewModel generalAppUserListModel = new AppUserListViewModel();
+            generalAppUserListModel.Id = user.Id;
+            generalAppUserListModel.Name = user.Name;
+            generalAppUserListModel.Picture = user.Picture;
+            generalAppUserListModel.Lastname = user.LastName;
+            generalAppUserListModel.Email = user.Email;
+            //is gorev icin
+            JobWorkListViewModel jobModel = new JobWorkListViewModel();
+            jobModel.Id = jobWorkUser.Id;
+            jobModel.Name = jobWorkUser.Name;
+            jobModel.Description = jobWorkUser.Description;
+            jobModel.Urgency = jobWorkUser.Urgency;
+            //personel gorevlendir
+            EmployeeJobWorkListViewModel employeeJobWorkListViewModel = new EmployeeJobWorkListViewModel();
+            employeeJobWorkListViewModel.AppUser = generalAppUserListModel;
+            employeeJobWorkListViewModel.JobWork = jobModel;
+
+            return View(employeeJobWorkListViewModel);
+        }
+
+        public IActionResult GetExcel(int id)
+        {
+            return File(_documentService.TransferExcel(_jobWorkService.GetReportId(id).Report), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", Guid.NewGuid()+".xlsx");
+        }
+
+        public IActionResult GetPfd(int id)
+        {
+            var path = _documentService.TransferPdf(_jobWorkService.GetReportId(id).Report);
+
+            return File(path,"application/pdf", Guid.NewGuid() + ".pdf");
         }
     }
 }

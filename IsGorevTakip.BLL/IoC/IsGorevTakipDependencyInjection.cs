@@ -16,12 +16,16 @@ namespace IsGorevTakip.BLL.IoC
             services.AddScoped<IUrgencyService, UrgencyManager>();
             services.AddScoped<IReportService, ReportManager>();
             services.AddScoped<IAppUserService, AppUserManager>();
+            services.AddScoped<IDocumentService, DocumentManager>();
+            services.AddScoped<IDeclaretionnService, DeclaretionnManager>();
 
 
             services.AddScoped<IJobWorkDAL, EfJobWorkRepository>();
             services.AddScoped<IUrgencyDal, EfUrgencyReporsitory>();
             services.AddScoped<IReportatDal, EfReportRepository>();
             services.AddScoped<IAppUserDal, EfAppUserRepository>();
+            services.AddScoped<IDeclaretionnDal, EfDeclaretionnRepository>();
+
 
             return services;
 

@@ -7,5 +7,7 @@ namespace IsGorevTakip.BLL.Abstract
 {
     public interface IReportService:IGenericService<Report>
     {
+        Report GetReportJobWorkId(int id);
+
     }
 }

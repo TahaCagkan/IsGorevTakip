@@ -12,9 +12,11 @@
     <Folder Include="Areas\Member\Models\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\documents\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
   </ItemGroup>
 

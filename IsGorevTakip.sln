@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsGorevTakip.DAL", "IsGorev
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsGorevTakip.Entities", "IsGorevTakip.Entities\IsGorevTakip.Entities.csproj", "{B9A721BD-A49E-4153-921A-2C6009CCEDCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsGorevTakip.WebUI", "IsGorevTakip.WebUI\IsGorevTakip.WebUI.csproj", "{013DDC9F-D58F-4A3C-AC86-BD28E5A09859}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsGorevTakip.WebUI", "IsGorevTakip.WebUI\IsGorevTakip.WebUI.csproj", "{013DDC9F-D58F-4A3C-AC86-BD28E5A09859}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsGorevTakip.DTO", "IsGorevTakip.DTO\IsGorevTakip.DTO.csproj", "{DC18442D-14F2-442B-86D5-76B6F58002CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{013DDC9F-D58F-4A3C-AC86-BD28E5A09859}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{013DDC9F-D58F-4A3C-AC86-BD28E5A09859}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{013DDC9F-D58F-4A3C-AC86-BD28E5A09859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC18442D-14F2-442B-86D5-76B6F58002CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC18442D-14F2-442B-86D5-76B6F58002CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC18442D-14F2-442B-86D5-76B6F58002CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC18442D-14F2-442B-86D5-76B6F58002CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

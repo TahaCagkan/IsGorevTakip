@@ -27,5 +27,7 @@ namespace IsGorevTakip.DAL.EntityFramework.Context
         public DbSet<JobWork> JobWork { get; set; }
         public DbSet<Urgency> Urgency { get; set; }
         public DbSet<Report> Report { get; set; }
+        public DbSet<Declarationn> Declarationns { get; set; }
+
     }
 }

@@ -39,5 +39,10 @@ namespace IsGorevTakip.BLL.Concrete
         {
             _reportatDal.Update(entity);
         }
+
+        public Report GetReportJobWorkId(int id)
+        {
+           return _reportatDal.GetReportJobWorkId(id);
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace IsGorevTakip.DAL.Abstract
 {
     public interface IReportatDal: IGenericRepository<Report>
     {
+        Report GetReportJobWorkId(int id);
     }
 }

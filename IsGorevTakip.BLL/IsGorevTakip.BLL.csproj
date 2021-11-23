@@ -5,8 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="5.0.4" />
+    <PackageReference Include="FastMember" Version="1.5.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.4" />
+    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.6.9" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\IsGorevTakip.Core\IsGorevTakip.Core.csproj" />
     <ProjectReference Include="..\IsGorevTakip.DAL\IsGorevTakip.DAL.csproj" />
+    <ProjectReference Include="..\IsGorevTakip.DTO\IsGorevTakip.DTO.csproj" />
   </ItemGroup>
 
 </Project>

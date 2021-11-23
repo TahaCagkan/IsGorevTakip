@@ -89,5 +89,21 @@ namespace IsGorevTakip.WebUI.Controllers
 
             return View(model);
         }
+
+        public async Task<IActionResult> SessionOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult StatusCode(int? code)
+        {
+            if(code == 404)
+            {
+                ViewBag.Code = code;
+                ViewBag.Message = "Sayfa Bulunamadı";
+            }         
+            return View();
+        }
     }
 }

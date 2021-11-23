@@ -1,0 +1,32 @@
+﻿@model AppUserListViewModel
+
+@{
+    string active = string.Empty;
+    if (TempData["Active"] != null)
+    {
+        active = TempData["Active"].ToString();
+
+    }
+}
+
+<div class="border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading">
+        <img src="~/img/@Model.Picture" alt="@Model.Name" style="height:10rem!important;" class="w-100 img-thumbnail" />
+    </div>
+    <div class="list-group list-group-flush">
+        <a asp-action="Index" asp-controller="JobWork" class="list-group-item list-group-item-action @(active=="jobWorkActive"?"active":"")">Görev İşlemleri</a>
+        <a asp-action="Index" asp-controller="Urgency" class="list-group-item list-group-item-action @(active=="urgencyActive"?"active":"")">Aciliyet işlemleri</a>
+        <a asp-action="Index" asp-controller="JobWorkOrder" class="list-group-item list-group-item-action @(active=="jobWorkOrderActive"?"active":"")">İş Emirleri</a>
+        <a href="#" class="list-group-item list-group-item-action ">Grafikler</a>
+        <a href="#" class="list-group-item list-group-item-action ">İstatistikler</a>
+        <a asp-action="Index" asp-controller="Declaretionn" class="list-group-item list-group-item-action position-relative">
+            @if (ViewBag.DeclaretionCount > 0)
+            {
+                <sub class="badge badge-info badge-pill position-absolute" style="bottom:0.625rem!important; left:1.7rem!important;"><small>ViewBag.DeclaretionCount > 0</small></sub>
+             }
+            Bildirimler
+        </a>
+        <a asp-action="Index" asp-controller="Profil" class="list-group-item list-group-item-action @(active=="profileActive"?"active":"")">Profilim</a>
+        <a asp-area="" asp-action="SessionOut" asp-controller="Home" class="list-group-item list-group-item-action ">Çıkış Yap</a>
+    </div>
+</div>

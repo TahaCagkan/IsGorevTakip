@@ -126,6 +126,29 @@ namespace IsGorevTakip.DAL.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("IsGorevTakip.Entities.Concrete.Declarationn", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Is_Active_Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Declarationns");
+                });
+
             modelBuilder.Entity("IsGorevTakip.Entities.Concrete.JobWork", b =>
                 {
                     b.Property<int>("Id")
@@ -305,6 +328,15 @@ namespace IsGorevTakip.DAL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("IsGorevTakip.Entities.Concrete.Declarationn", b =>
+                {
+                    b.HasOne("IsGorevTakip.Entities.Concrete.AppUser", "AppUser")
+                        .WithMany("Declarations")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("IsGorevTakip.Entities.Concrete.JobWork", b =>
